@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
-      <header className="border-b border-black/10 dark:border-white/10">
+      <header className="sticky top-0 z-10 border-b border-black/10 bg-background dark:border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <span className="text-lg font-semibold tracking-tight">
             OinariTech
