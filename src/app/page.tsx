@@ -48,6 +48,14 @@ export default function Home() {
           <p className="mt-4 text-black/70 dark:text-white/70">
             お仕事のご相談はお気軽にご連絡ください。
           </p>
+          <p className="mt-4">
+            <a
+              href="mailto:oinaritech@gmail.com"
+              className="font-medium hover:underline"
+            >
+              oinaritech@gmail.com
+            </a>
+          </p>
         </section>
       </main>
 
