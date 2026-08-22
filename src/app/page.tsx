@@ -23,7 +23,7 @@ export default function Home() {
             OinariTech
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-black/70 dark:text-white/70">
-            テクノロジーで、ビジネスの成長を加速する。
+            コンコンと、閃く。
           </p>
         </section>
 
