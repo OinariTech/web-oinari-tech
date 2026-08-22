@@ -1,21 +1,3 @@
-const services = [
-  {
-    title: "ソフトウェア開発",
-    description:
-      "Web / モバイルアプリケーションの設計・開発・運用を一気通貫でご支援します。",
-  },
-  {
-    title: "クラウドインフラ構築",
-    description:
-      "Google Cloud を中心に、スケーラブルで運用しやすいインフラを構築します。",
-  },
-  {
-    title: "技術コンサルティング",
-    description:
-      "技術選定やアーキテクチャ設計など、開発プロジェクトの立ち上げをサポートします。",
-  },
-];
-
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
@@ -47,18 +29,12 @@ export default function Home() {
 
         <section id="services" className="mx-auto max-w-5xl px-6 pb-24">
           <h2 className="text-2xl font-semibold tracking-tight">事業内容</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            {services.map((service) => (
-              <div
-                key={service.title}
-                className="rounded-lg border border-black/10 p-6 dark:border-white/10"
-              >
-                <h3 className="font-semibold">{service.title}</h3>
-                <p className="mt-2 text-sm text-black/70 dark:text-white/70">
-                  {service.description}
-                </p>
-              </div>
-            ))}
+          <div className="mt-8 rounded-lg border border-black/10 p-8 dark:border-white/10">
+            <h3 className="font-semibold">自社ソフトウェア開発</h3>
+            <p className="mt-2 text-sm text-black/70 dark:text-white/70">
+              自社サービスとしてのソフトウェア・アプリケーションを開発しています。
+              リリースした製品は順次こちらに掲載していきます。
+            </p>
           </div>
         </section>
 
