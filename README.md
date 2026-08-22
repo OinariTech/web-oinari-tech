@@ -63,3 +63,6 @@ gcloud run deploy web-oinari-tech \
 
   対象のサービスアカウントには最低限 `roles/run.admin` と `roles/artifactregistry.writer`、
   また Cloud Run のランタイムサービスアカウントに対する `roles/iam.serviceAccountUser` が必要です。
+
+  Secret 発行までの GCP 側セットアップ手順（API 有効化、サービスアカウント作成、
+  Workload Identity Federation の設定など）は [docs/gcp-setup.md](docs/gcp-setup.md) を参照してください。
