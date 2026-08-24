@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
@@ -18,13 +20,28 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        <section className="mx-auto max-w-5xl px-6 py-24 text-center sm:py-32">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-            OinariTech
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-black/70 dark:text-white/70">
-            コンコンと、閃く。
-          </p>
+        <section className="relative overflow-hidden px-6 py-24 text-center sm:py-32">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_40%_at_50%_0%,rgba(234,120,50,0.14),transparent)] dark:bg-[radial-gradient(50%_40%_at_50%_0%,rgba(234,120,50,0.10),transparent)]"
+          />
+          <div className="mx-auto max-w-5xl">
+            <Image
+              src="/brand/fox-mark.png"
+              alt="OinariTech"
+              width={72}
+              height={72}
+              priority
+              className="mx-auto rounded-2xl shadow-[0_8px_30px_rgba(31,58,90,0.15)]"
+            />
+            <h1 className="mt-8 bg-linear-to-br from-[#1f3a5a] to-[#4d7fae] bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-white dark:to-white/60">
+              OinariTech
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg tracking-wide text-black/60 dark:text-white/60">
+              コンコンと、
+              <span className="font-medium text-[#ea7832]">閃く</span>。
+            </p>
+          </div>
         </section>
 
         <section id="services" className="mx-auto max-w-5xl px-6 pb-24">
