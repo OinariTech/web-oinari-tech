@@ -5,7 +5,15 @@ export default function Home() {
     <div className="flex flex-1 flex-col">
       <header className="sticky top-0 z-10 border-b border-black/10 bg-background dark:border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <span className="text-lg font-semibold tracking-tight">
+          <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+            <Image
+              src="/brand/fox-mark-plain.png"
+              alt=""
+              width={359}
+              height={367}
+              sizes="24px"
+              className="h-6 w-auto"
+            />
             OinariTech
           </span>
           <nav className="flex gap-6 text-sm">
@@ -23,20 +31,23 @@ export default function Home() {
         <section className="relative overflow-hidden px-6 py-24 text-center sm:py-32">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_40%_at_50%_0%,rgba(234,120,50,0.14),transparent)] dark:bg-[radial-gradient(50%_40%_at_50%_0%,rgba(234,120,50,0.10),transparent)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_65%_at_50%_0%,rgba(234,120,50,0.26),transparent)] dark:bg-[radial-gradient(55%_65%_at_50%_0%,rgba(234,120,50,0.20),transparent)]"
           />
           <div className="mx-auto max-w-5xl">
-            <Image
-              src="/brand/fox-mark.png"
-              alt="OinariTech"
-              width={72}
-              height={72}
-              priority
-              className="mx-auto rounded-2xl shadow-[0_8px_30px_rgba(31,58,90,0.15)]"
-            />
-            <h1 className="mt-8 bg-linear-to-br from-[#1f3a5a] to-[#4d7fae] bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-white dark:to-white/60">
-              OinariTech
-            </h1>
+            <div className="flex items-center justify-center gap-3 sm:gap-4">
+              <Image
+                src="/brand/fox-mark-plain.png"
+                alt=""
+                width={359}
+                height={367}
+                sizes="(min-width: 640px) 80px, 56px"
+                priority
+                className="h-14 w-auto drop-shadow-[0_6px_16px_rgba(31,58,90,0.18)] sm:h-20"
+              />
+              <h1 className="bg-linear-to-br from-[#1f3a5a] to-[#4d7fae] bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-white dark:to-white/60">
+                OinariTech
+              </h1>
+            </div>
             <p className="mx-auto mt-6 max-w-2xl text-lg tracking-wide text-black/60 dark:text-white/60">
               コンコンと、
               <span className="font-medium text-[#ea7832]">閃く</span>。
