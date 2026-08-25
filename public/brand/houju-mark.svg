@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="宝珠">
+  <style>
+    svg { --shu: #C8412F; --kin: #D9A441; }
+    @media (prefers-color-scheme: dark) { svg { --shu: #F0603F; --kin: #EFC062; } }
+  </style>
+  <path fill="var(--shu)" d="M 32,12 C 36,24 46,29 46,41 A 14,14 0 1 1 18,41 C 18,29 28,24 32,12 Z"/>
+  <path fill="var(--kin)" d="M 32,4 L 35,11 L 32,9.3 L 29,11 Z"/>
+</svg>
