@@ -1,11 +1,29 @@
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+
 function FoxMark({ className }: { className: string }) {
   // eslint-disable-next-line @next/next/no-img-element -- vector mark; next/image optimization adds no value for SVG
   return <img src="/brand/fox-mark.svg" alt="" className={className} />;
 }
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.svg`,
+    description: SITE_DESCRIPTION,
+    email: "oinaritech@gmail.com",
+  };
+
   return (
     <div className="flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <header className="sticky top-0 z-10 border-b border-black/10 bg-background dark:border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
