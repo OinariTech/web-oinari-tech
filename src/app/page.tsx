@@ -1,4 +1,7 @@
-import Image from "next/image";
+function FoxMark({ className }: { className: string }) {
+  // eslint-disable-next-line @next/next/no-img-element -- vector mark; next/image optimization adds no value for SVG
+  return <img src="/brand/fox-mark.svg" alt="" className={className} />;
+}
 
 export default function Home() {
   return (
@@ -6,14 +9,7 @@ export default function Home() {
       <header className="sticky top-0 z-10 border-b border-black/10 bg-background dark:border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-            <Image
-              src="/brand/fox-mark-plain.png"
-              alt=""
-              width={359}
-              height={367}
-              sizes="24px"
-              className="h-6 w-auto"
-            />
+            <FoxMark className="h-6 w-auto" />
             OinariTech
           </span>
           <nav className="flex gap-6 text-sm">
@@ -35,16 +31,8 @@ export default function Home() {
           />
           <div className="mx-auto max-w-5xl">
             <div className="flex items-center justify-center gap-3 sm:gap-4">
-              <Image
-                src="/brand/fox-mark-plain.png"
-                alt=""
-                width={359}
-                height={367}
-                sizes="(min-width: 640px) 80px, 56px"
-                priority
-                className="h-14 w-auto drop-shadow-[0_6px_16px_rgba(31,58,90,0.18)] sm:h-20"
-              />
-              <h1 className="bg-linear-to-br from-[#1f3a5a] to-[#4d7fae] bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-white dark:to-white/60">
+              <FoxMark className="h-14 w-auto drop-shadow-[0_6px_16px_rgba(80,30,20,0.18)] sm:h-20" />
+              <h1 className="bg-linear-to-br from-[#8f2a1c] to-[#C8412F] bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-[#F0603F] dark:to-[#EFC062]">
                 OinariTech
               </h1>
             </div>
