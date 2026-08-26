@@ -32,7 +32,7 @@ export default function Home() {
           </span>
           <nav className="flex gap-6 text-sm">
             <a href="#services" className="hover:underline">
-              つくっているもの
+              プロダクト
             </a>
             <a href="#contact" className="hover:underline">
               お問い合わせ
