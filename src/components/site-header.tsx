@@ -54,7 +54,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-controls="site-header-menu"
             aria-label="メニュー"
-            className="flex items-center gap-2 rounded-md p-2 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+            className="flex items-center rounded-md p-2 hover:bg-black/5 dark:hover:bg-white/10"
           >
             <svg
               aria-hidden
@@ -67,7 +67,6 @@ export function SiteHeader() {
             >
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-            メニュー
           </button>
 
           {open && (
