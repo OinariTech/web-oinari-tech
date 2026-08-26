@@ -19,20 +19,11 @@ export default function NotFound() {
             お探しのページは、移動または削除された可能性があります。
           </p>
 
-          <nav className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
-            <Link href="/" className="font-medium hover:underline">
+          <p className="mt-10">
+            <Link href="/" className="text-sm font-medium hover:underline">
               トップページへ戻る
             </Link>
-            <Link href="/products" className="hover:underline">
-              プロダクト
-            </Link>
-            <Link href="/about" className="hover:underline">
-              プロフィール
-            </Link>
-            <Link href="/#contact" className="hover:underline">
-              お問い合わせ
-            </Link>
-          </nav>
+          </p>
         </section>
       </main>
 
