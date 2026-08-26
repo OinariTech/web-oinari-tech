@@ -10,6 +10,7 @@ env:
   REGION: asia-northeast1
   SERVICE: web-oinari-tech
   REPOSITORY: web-oinari-tech
+  NEXT_PUBLIC_SITE_URL: https://oinaritech.com
 
 permissions:
   contents: read
@@ -37,7 +38,9 @@ jobs:
       - name: Build image
         run: |
           IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
-          docker build -t "$IMAGE" .
+          docker build \
+            --build-arg NEXT_PUBLIC_SITE_URL="${{ env.NEXT_PUBLIC_SITE_URL }}" \
+            -t "$IMAGE" .
           echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
 
       - name: Push image
