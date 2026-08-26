@@ -49,6 +49,22 @@ gcloud run deploy web-oinari-tech \
   --allow-unauthenticated
 ```
 
+## 環境変数
+
+`NEXT_PUBLIC_*` の値は Next.js のビルド時にバンドルへ埋め込まれます。
+Cloud Run のランタイム環境変数では反映されないため、
+`.github/workflows/deploy.yml` の `env` に定義し、
+Docker の `--build-arg` としてビルドへ渡しています。
+
+| 変数                            | 説明                                            |
+| ------------------------------- | ----------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | 正規 URL。OGP・sitemap.xml・robots.txt で使用    |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics (GA4) の測定 ID                 |
+
+いずれも公開値のため Secrets ではなくワークフロー内に直接記述しています。
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` が未設定の場合、
+Google Analytics のスクリプトは出力されません。
+
 ## CI/CD (GitHub Actions)
 
 - `.github/workflows/ci.yml`: PR / push 時に lint とビルドを実行します。
