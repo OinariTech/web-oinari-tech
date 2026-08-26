@@ -63,7 +63,7 @@ export default function Home() {
 
         <section id="services" className="mx-auto max-w-5xl px-6 pb-24">
           <h2 className="text-2xl font-semibold tracking-tight">
-            つくっているもの
+            プロダクト
           </h2>
           <div className="mt-8 rounded-lg border border-black/10 p-8 dark:border-white/10">
             <h3 className="font-semibold">個人開発のソフトウェア</h3>
