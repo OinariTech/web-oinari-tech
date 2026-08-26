@@ -32,7 +32,7 @@ export default function Home() {
           </span>
           <nav className="flex gap-6 text-sm">
             <a href="#services" className="hover:underline">
-              事業内容
+              つくっているもの
             </a>
             <a href="#contact" className="hover:underline">
               お問い合わせ
@@ -62,11 +62,13 @@ export default function Home() {
         </section>
 
         <section id="services" className="mx-auto max-w-5xl px-6 pb-24">
-          <h2 className="text-2xl font-semibold tracking-tight">事業内容</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            つくっているもの
+          </h2>
           <div className="mt-8 rounded-lg border border-black/10 p-8 dark:border-white/10">
-            <h3 className="font-semibold">自社ソフトウェア開発</h3>
+            <h3 className="font-semibold">個人開発のソフトウェア</h3>
             <p className="mt-2 text-sm text-black/70 dark:text-white/70">
-              自社サービスとしてのソフトウェア・アプリケーションを開発しています。
+              個人でソフトウェア・アプリケーションを開発しています。
               リリースした製品は順次こちらに掲載していきます。
             </p>
           </div>
