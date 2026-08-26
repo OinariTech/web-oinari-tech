@@ -9,10 +9,10 @@ export default function NotFound() {
 
       <main className="flex-1">
         <section className="mx-auto max-w-3xl px-6 py-24 text-center">
-          <p className="text-sm font-medium tracking-widest text-[#ea7832]">
+          <p className="text-7xl font-bold tracking-tight text-[#ea7832] sm:text-8xl">
             404
           </p>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">
+          <h1 className="mt-6 text-2xl font-bold tracking-tight sm:text-3xl">
             ページが見つかりません
           </h1>
           <p className="mt-4 text-black/70 dark:text-white/70">
