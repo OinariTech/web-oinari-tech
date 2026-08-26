@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FoxMark } from "@/components/fox-mark";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -54,6 +55,33 @@ export default function Home() {
               個人でソフトウェア・アプリケーションを開発しています。
               リリースした製品は順次こちらに掲載していきます。
             </p>
+            <p className="mt-4">
+              <Link
+                href="/products"
+                className="text-sm font-medium hover:underline"
+              >
+                プロダクト一覧を見る →
+              </Link>
+            </p>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-6 pb-24">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            プロフィール
+          </h2>
+          <div className="mt-8 rounded-lg border border-black/10 p-8 dark:border-white/10">
+            <p className="text-sm text-black/70 dark:text-white/70">
+              OinariTech の運営者情報はこちらでご確認いただけます。
+            </p>
+            <p className="mt-4">
+              <Link
+                href="/about"
+                className="text-sm font-medium hover:underline"
+              >
+                プロフィールを見る →
+              </Link>
+            </p>
           </div>
         </section>
 
@@ -74,6 +102,13 @@ export default function Home() {
             >
               oinaritech@gmail.com
             </a>
+          </p>
+          <p className="mt-6 text-xs text-black/50 dark:text-white/50">
+            お問い合わせいただいた内容の取り扱いについては
+            <Link href="/privacy" className="hover:underline">
+              プライバシーポリシー
+            </Link>
+            をご覧ください。
           </p>
         </section>
       </main>
