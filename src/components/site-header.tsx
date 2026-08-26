@@ -6,6 +6,8 @@ import { FoxMark } from "@/components/fox-mark";
 
 const NAV_LINKS = [
   { href: "/products", label: "プロダクト" },
+  { href: "/about", label: "プロフィール" },
+  { href: "/privacy", label: "プライバシーポリシー" },
   { href: "/#contact", label: "お問い合わせ" },
 ];
 
@@ -72,14 +74,14 @@ export function SiteHeader() {
           {open && (
             <nav
               id="site-header-menu"
-              className="absolute top-full right-0 mt-2 min-w-40 rounded-lg border border-black/10 bg-background py-2 shadow-lg dark:border-white/10"
+              className="absolute top-full right-0 mt-2 min-w-max rounded-lg border border-black/10 bg-background py-2 shadow-lg dark:border-white/10"
             >
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block px-4 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+                  className="block px-4 py-2 text-sm whitespace-nowrap hover:bg-black/5 dark:hover:bg-white/10"
                 >
                   {link.label}
                 </Link>
