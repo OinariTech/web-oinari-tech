@@ -1,9 +1,7 @@
+import { FoxMark } from "@/components/fox-mark";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
-
-function FoxMark({ className }: { className: string }) {
-  // eslint-disable-next-line @next/next/no-img-element -- vector mark; next/image optimization adds no value for SVG
-  return <img src="/brand/fox-mark.svg" alt="" className={className} />;
-}
 
 export default function Home() {
   const jsonLd = {
@@ -24,22 +22,7 @@ export default function Home() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <header className="sticky top-0 z-10 border-b border-black/10 bg-background dark:border-white/10">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-            <FoxMark className="h-6 w-auto" />
-            OinariTech
-          </span>
-          <nav className="flex gap-6 text-sm">
-            <a href="#services" className="hover:underline">
-              プロダクト
-            </a>
-            <a href="#contact" className="hover:underline">
-              お問い合わせ
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="flex-1">
         <section className="relative overflow-hidden px-6 py-24 text-center sm:py-32">
@@ -95,9 +78,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-black/10 px-6 py-8 text-center text-sm text-black/50 dark:border-white/10 dark:text-white/50">
-        © {new Date().getFullYear()} OinariTech
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
