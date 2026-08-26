@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { GoogleAnalytics } from "@/components/google-analytics";
+import { GA_MEASUREMENT_ID, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,7 +42,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        {GA_MEASUREMENT_ID && (
+          <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
+        )}
+      </body>
     </html>
   );
 }
