@@ -5,7 +5,12 @@ import { redirect } from "next/navigation";
 import { deleteSessionCookie, verifyAdminSession } from "@/lib/admin-session";
 import { updateProduct } from "@/lib/products";
 
-export async function updateProductAction(formData: FormData) {
+export type UpdateProductState = { savedAt: number } | null;
+
+export async function updateProductAction(
+  _prevState: UpdateProductState,
+  formData: FormData,
+): Promise<UpdateProductState> {
   const session = await verifyAdminSession();
   if (!session) {
     redirect("/admin/login");
@@ -27,6 +32,8 @@ export async function updateProductAction(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/products");
   revalidatePath(`/products/${id}`);
+
+  return { savedAt: Date.now() };
 }
 
 export async function logoutAction() {
