@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PuzzlioMark } from "@/components/puzzlio-mark";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getProduct } from "@/lib/products";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Puzzlio",
@@ -33,7 +37,12 @@ const GAMES = [
   },
 ];
 
-export default function PuzzlioProductPage() {
+export default async function PuzzlioProductPage() {
+  const product = await getProduct("puzzlio");
+  if (!product || !product.visible) {
+    notFound();
+  }
+
   return (
     <div className="flex flex-1 flex-col">
       <SiteHeader />
@@ -43,7 +52,9 @@ export default function PuzzlioProductPage() {
           <div className="flex items-center gap-4">
             <PuzzlioMark className="h-14 w-14" />
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Puzzlio</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                {product.title}
+              </h1>
               <p className="mt-1 text-sm text-black/60 dark:text-white/60">
                 Android / iOS 向けパズルゲームアプリ
               </p>
@@ -51,7 +62,7 @@ export default function PuzzlioProductPage() {
           </div>
 
           <p className="mt-8 text-black/70 dark:text-white/70">
-            定番のパズルゲームを1つにまとめて遊べる、パズルゲームアグリゲーターアプリです。以下の4種類を収録しています。各ゲームのベストスコア・ベストタイムは端末内に保存され、いつでも自分の記録に挑戦できます。
+            {product.pageIntro}
           </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2">

@@ -42,6 +42,52 @@ chunks (`split -n`) makes transcription far more reliable. Files around 30KB+
 — hand those to the user with `SendUserFile` for manual upload instead of
 uploading something corrupt.
 
+# Admin page (`/admin`)
+
+`/admin` lets the site owner edit product info (title, badge, card/page copy)
+and toggle whether a product shows up at all, without a code change. It's a
+dynamically-rendered (`export const dynamic = "force-dynamic"`) part of the
+Next.js app, not a separate service.
+
+- **Auth**: Google OAuth (`src/lib/google-oauth.ts`), restricted to a single
+  hardcoded address in `src/lib/admin-session.ts` (`ADMIN_EMAIL`) — deliberately
+  not an env var, so a missing/misconfigured env var can't accidentally open
+  admin access to anyone. The session is a signed (`jose`) HttpOnly cookie;
+  `src/proxy.ts` does the optimistic redirect-to-login check for `/admin/*`,
+  and every admin Server Action/page re-checks via `verifyAdminSession()`.
+- **Data**: Firestore (`src/lib/firestore.ts`, `@google-cloud/firestore`),
+  collection `products`, one document per product id. `src/lib/products.ts`
+  falls back to hardcoded defaults if Firestore is unreachable or a document
+  doesn't exist yet — the public site must never break because Firestore
+  isn't provisioned or is temporarily down.
+- **Runtime env vars** (set via Secret Manager in `deploy.yml`, not build
+  args — these are server-only secrets and must never reach the client
+  bundle): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
+  `SESSION_SECRET` (a random 32+ byte string, e.g. `openssl rand -base64 32`).
+
+## Manual GCP setup required (cannot be done from a coding session)
+
+The following one-time steps happen in the Google Cloud / Google Cloud Console
+outside this repo, and are prerequisites for `/admin` to work in production:
+
+1. **Firestore**: enable the Firestore API (Native mode) for the project, and
+   grant the Cloud Run service's runtime service account the "Cloud Datastore
+   User" (`roles/datastore.user`) IAM role.
+2. **OAuth client**: in Google Cloud Console → APIs & Services → Credentials,
+   create an OAuth 2.0 Client ID (Web application) for the admin login.
+   Authorized redirect URI: `https://<production-domain>/api/auth/google/callback`.
+3. **Secret Manager**: create secrets named `GOOGLE_OAUTH_CLIENT_ID`,
+   `GOOGLE_OAUTH_CLIENT_SECRET`, and `SESSION_SECRET` with the values from
+   steps 1–2 above, and grant the GitHub Actions deploy service account
+   (`secrets.GCP_SERVICE_ACCOUNT`) and the Cloud Run runtime service account
+   "Secret Manager Secret Accessor" (`roles/secretmanager.secretAccessor`) on
+   each. `deploy.yml` references them by name; nothing else to change there
+   once they exist.
+
+Until these are done, `/admin/login` will error on submit and the public
+product pages will silently show their hardcoded defaults (by design) instead
+of Firestore-edited content.
+
 ## Local (PC) sessions: hold commits until asked
 
 When working from a local checkout on the user's PC (as opposed to a cloud/
