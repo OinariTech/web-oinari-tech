@@ -42,12 +42,21 @@ chunks (`split -n`) makes transcription far more reliable. Files around 30KB+
 — hand those to the user with `SendUserFile` for manual upload instead of
 uploading something corrupt.
 
-# Admin page (`/admin`)
+# Admin page
 
-`/admin` lets the site owner edit product info (title, badge, card/page copy)
-and toggle whether a product shows up at all, without a code change. It's a
-dynamically-rendered (`export const dynamic = "force-dynamic"`) part of the
-Next.js app, not a separate service.
+The admin page lets the site owner edit product info (title, badge, card/page
+copy) and toggle whether a product shows up at all, without a code change.
+It's a dynamically-rendered (`export const dynamic = "force-dynamic"`) part of
+the Next.js app, not a separate service.
+
+- **URL**: the pages live at `src/app/admin/` but are served under a secret
+  segment from `ADMIN_PATH` (`src/lib/admin-path.ts`). **This repo is public,
+  so the secret path must never be written into the source, a route directory
+  name, docs, or a commit message** — it lives only in Secret Manager. Use
+  `adminUrl()` for any link/redirect that the browser will see; `proxy.ts`
+  rewrites the secret path onto `/admin` and renders the 404 page for direct
+  `/admin` requests. `ADMIN_PATH` falls back to `admin` when unset (local
+  dev), which costs only the obscurity layer, never the auth below.
 
 - **Auth**: Google OAuth (`src/lib/google-oauth.ts`), restricted to a single
   hardcoded address in `src/lib/admin-session.ts` (`ADMIN_EMAIL`) — deliberately
@@ -63,7 +72,8 @@ Next.js app, not a separate service.
 - **Runtime env vars** (set via Secret Manager in `deploy.yml`, not build
   args — these are server-only secrets and must never reach the client
   bundle): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
-  `SESSION_SECRET` (a random 32+ byte string, e.g. `openssl rand -base64 32`).
+  `SESSION_SECRET` (a random 32+ byte string, e.g. `openssl rand -base64 32`),
+  and `ADMIN_PATH` (the secret URL segment above).
 
 ## Manual GCP setup required (cannot be done from a coding session)
 
@@ -77,14 +87,14 @@ outside this repo, and are prerequisites for `/admin` to work in production:
    create an OAuth 2.0 Client ID (Web application) for the admin login.
    Authorized redirect URI: `https://<production-domain>/api/auth/google/callback`.
 3. **Secret Manager**: create secrets named `GOOGLE_OAUTH_CLIENT_ID`,
-   `GOOGLE_OAUTH_CLIENT_SECRET`, and `SESSION_SECRET` with the values from
-   steps 1–2 above, and grant the GitHub Actions deploy service account
-   (`secrets.GCP_SERVICE_ACCOUNT`) and the Cloud Run runtime service account
-   "Secret Manager Secret Accessor" (`roles/secretmanager.secretAccessor`) on
-   each. `deploy.yml` references them by name; nothing else to change there
-   once they exist.
+   `GOOGLE_OAUTH_CLIENT_SECRET`, `SESSION_SECRET`, and `ADMIN_PATH` with the
+   values from steps 1–2 above, and grant the GitHub Actions deploy service
+   account (`secrets.GCP_SERVICE_ACCOUNT`) and the Cloud Run runtime service
+   account "Secret Manager Secret Accessor"
+   (`roles/secretmanager.secretAccessor`) on each. `deploy.yml` references
+   them by name; nothing else to change there once they exist.
 
-Until these are done, `/admin/login` will error on submit and the public
+Until these are done, the admin login will error on submit and the public
 product pages will silently show their hardcoded defaults (by design) instead
 of Firestore-edited content.
 

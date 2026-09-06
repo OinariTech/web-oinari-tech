@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/app/admin/actions";
 import { ProductForm } from "@/app/admin/product-form";
+import { adminUrl } from "@/lib/admin-path";
 import { verifyAdminSession } from "@/lib/admin-session";
 import { getAllProductsForAdmin } from "@/lib/products";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default async function AdminPage() {
   const session = await verifyAdminSession();
   if (!session) {
-    redirect("/admin/login");
+    redirect(adminUrl("/login"));
   }
 
   const products = await getAllProductsForAdmin();
