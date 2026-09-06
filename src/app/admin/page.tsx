@@ -19,7 +19,7 @@ export default async function AdminPage() {
   const products = await getAllProductsForAdmin();
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
+    <div className="mx-auto px-6 py-16">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">管理者ページ</h1>
         <form action={logoutAction}>
