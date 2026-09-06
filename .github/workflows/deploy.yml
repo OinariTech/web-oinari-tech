@@ -54,3 +54,9 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE }}
+          # Runtime-only secrets for /admin (Google login + session signing).
+          # Not build args: these must not end up in the image or client bundle.
+          secrets: |
+            GOOGLE_OAUTH_CLIENT_ID=GOOGLE_OAUTH_CLIENT_ID:latest
+            GOOGLE_OAUTH_CLIENT_SECRET=GOOGLE_OAUTH_CLIENT_SECRET:latest
+            SESSION_SECRET=SESSION_SECRET:latest
