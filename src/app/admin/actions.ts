@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { adminUrl } from "@/lib/admin-path";
 import { deleteSessionCookie, verifyAdminSession } from "@/lib/admin-session";
 import { updateProduct } from "@/lib/products";
 
@@ -13,7 +14,7 @@ export async function updateProductAction(
 ): Promise<UpdateProductState> {
   const session = await verifyAdminSession();
   if (!session) {
-    redirect("/admin/login");
+    redirect(adminUrl("/login"));
   }
 
   const id = String(formData.get("id") ?? "");
@@ -38,5 +39,5 @@ export async function updateProductAction(
 
 export async function logoutAction() {
   await deleteSessionCookie();
-  redirect("/admin/login");
+  redirect(adminUrl("/login"));
 }

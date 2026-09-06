@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { adminUrl } from "@/lib/admin-path";
 import { ADMIN_EMAIL, createSessionCookie } from "@/lib/admin-session";
 import { getEmailFromCode, OAUTH_STATE_COOKIE } from "@/lib/google-oauth";
 import { SITE_URL } from "@/lib/site";
@@ -9,7 +10,7 @@ export async function GET(request: NextRequest) {
   const expectedState = request.cookies.get(OAUTH_STATE_COOKIE)?.value;
 
   const loginUrl = (error: string) =>
-    new URL(`/admin/login?error=${error}`, SITE_URL);
+    new URL(`${adminUrl("/login")}?error=${error}`, SITE_URL);
 
   if (!code || !state || !expectedState || state !== expectedState) {
     return NextResponse.redirect(loginUrl("invalid_state"));
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
 
   await createSessionCookie(email);
 
-  const response = NextResponse.redirect(new URL("/admin", SITE_URL));
+  const response = NextResponse.redirect(new URL(adminUrl(), SITE_URL));
   response.cookies.delete(OAUTH_STATE_COOKIE);
   return response;
 }
