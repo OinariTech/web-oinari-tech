@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { logoutAction, updateProductAction } from "@/app/admin/actions";
+import { logoutAction } from "@/app/admin/actions";
+import { ProductForm } from "@/app/admin/product-form";
 import { verifyAdminSession } from "@/lib/admin-session";
 import { getAllProductsForAdmin } from "@/lib/products";
 
@@ -37,72 +38,7 @@ export default async function AdminPage() {
       <h2 className="mt-10 text-lg font-semibold">プロダクト</h2>
       <div className="mt-4 space-y-6">
         {products.map((product) => (
-          <form
-            key={product.id}
-            action={updateProductAction}
-            className="rounded-lg border border-black/10 p-6 dark:border-white/10"
-          >
-            <input type="hidden" name="id" value={product.id} />
-
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold">{product.id}</h3>
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  name="visible"
-                  defaultChecked={product.visible}
-                />
-                サイトに表示する
-              </label>
-            </div>
-
-            <label className="mt-4 block text-sm font-medium">
-              タイトル
-              <input
-                type="text"
-                name="title"
-                defaultValue={product.title}
-                className="mt-1 block w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm dark:border-white/15"
-              />
-            </label>
-
-            <label className="mt-4 block text-sm font-medium">
-              バッジ文言
-              <input
-                type="text"
-                name="badge"
-                defaultValue={product.badge}
-                className="mt-1 block w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm dark:border-white/15"
-              />
-            </label>
-
-            <label className="mt-4 block text-sm font-medium">
-              カード説明文(/products一覧)
-              <textarea
-                name="cardDescription"
-                defaultValue={product.cardDescription}
-                rows={2}
-                className="mt-1 block w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm dark:border-white/15"
-              />
-            </label>
-
-            <label className="mt-4 block text-sm font-medium">
-              紹介文(プロダクトページ冒頭)
-              <textarea
-                name="pageIntro"
-                defaultValue={product.pageIntro}
-                rows={4}
-                className="mt-1 block w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm dark:border-white/15"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="mt-4 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
-            >
-              保存
-            </button>
-          </form>
+          <ProductForm key={product.id} product={product} />
         ))}
       </div>
     </div>
