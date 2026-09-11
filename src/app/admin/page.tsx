@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/app/admin/actions";
 import { ProductForm } from "@/app/admin/product-form";
+import { ProfileForm } from "@/app/admin/profile-form";
 import { adminUrl } from "@/lib/admin-path";
 import { verifyAdminSession } from "@/lib/admin-session";
 import { getAllProductsForAdmin } from "@/lib/products";
+import { getProfile } from "@/lib/profile";
 
 export const metadata: Metadata = {
   title: "管理者ページ",
@@ -17,7 +19,10 @@ export default async function AdminPage() {
     redirect(adminUrl("/login"));
   }
 
-  const products = await getAllProductsForAdmin();
+  const [products, profile] = await Promise.all([
+    getAllProductsForAdmin(),
+    getProfile(),
+  ]);
 
   return (
     <div className="px-6 py-16">
@@ -41,6 +46,11 @@ export default async function AdminPage() {
         {products.map((product) => (
           <ProductForm key={product.id} product={product} />
         ))}
+      </div>
+
+      <h2 className="mt-12 text-lg font-semibold">プロフィール</h2>
+      <div className="mt-4">
+        <ProfileForm profile={profile} />
       </div>
     </div>
   );
