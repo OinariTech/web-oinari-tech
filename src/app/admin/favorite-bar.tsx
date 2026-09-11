@@ -41,7 +41,7 @@ export function FavoriteBar({
               className="min-w-0 flex-1 rounded-md border border-black/15 bg-transparent px-2 py-1 text-sm dark:border-white/15"
             />
             <span className="text-xs whitespace-nowrap text-black/40 dark:text-white/40">
-              {favorite ? formatSavedAt(favorite.savedAt) : "空き"}
+              {favorite ? "保存済み" : "空き"}
             </span>
             {/* The slot travels as a bound argument, not a name/value pair:
                 React overwrites the `name` of a formAction button with its
@@ -66,10 +66,4 @@ export function FavoriteBar({
       </div>
     </div>
   );
-}
-
-function formatSavedAt(savedAt: number) {
-  const d = new Date(savedAt);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }

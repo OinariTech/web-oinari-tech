@@ -99,7 +99,6 @@ export async function saveFavoriteAction(
 
   await saveFavorite(scope, slot, {
     label: String(formData.get(`slotLabel${slot}`) ?? "").trim(),
-    savedAt: Date.now(),
     data: pickFavoriteData(scope, formData),
   });
 
