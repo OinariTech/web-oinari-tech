@@ -7,7 +7,6 @@ export type FavoriteData = Record<string, string | boolean>;
 
 export type FavoriteSlot = {
   label: string;
-  savedAt: number;
   data: FavoriteData;
 };
 
