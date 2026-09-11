@@ -1,22 +1,33 @@
 "use client";
 
 import { updateProfileAction } from "@/app/admin/actions";
+import { FavoriteBar } from "@/app/admin/favorite-bar";
 import {
   FIELD_CLASS,
   LABEL_CLASS,
   SaveButton,
+  useFormValues,
   useSaveForm,
 } from "@/app/admin/save-form";
+import type { Favorites } from "@/lib/favorites";
 import type { Profile } from "@/lib/profile";
 
 const HINT_CLASS = "mt-1 block text-xs font-normal text-black/50 dark:text-white/50";
 
-export function ProfileForm({ profile }: { profile: Profile }) {
+export function ProfileForm({
+  profile,
+  favorites,
+}: {
+  profile: Profile;
+  favorites: Favorites;
+}) {
   const { formAction, pending, dirty, saved, markDirty } =
     useSaveForm(updateProfileAction);
+  const { values, formKey, loadFavorite } = useFormValues(profile);
 
   return (
     <form
+      key={formKey}
       action={formAction}
       onChange={markDirty}
       className="rounded-lg border border-black/10 p-6 dark:border-white/10"
@@ -28,7 +39,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         </span>
         <textarea
           name="intro"
-          defaultValue={profile.intro}
+          defaultValue={values.intro}
           rows={4}
           className={FIELD_CLASS}
         />
@@ -41,7 +52,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         <input
           type="text"
           name="businessName"
-          defaultValue={profile.businessName}
+          defaultValue={values.businessName}
           className={FIELD_CLASS}
         />
       </label>
@@ -51,7 +62,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         <input
           type="text"
           name="activity"
-          defaultValue={profile.activity}
+          defaultValue={values.activity}
           className={FIELD_CLASS}
         />
       </label>
@@ -61,7 +72,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         <input
           type="text"
           name="location"
-          defaultValue={profile.location}
+          defaultValue={values.location}
           className={FIELD_CLASS}
         />
       </label>
@@ -74,7 +85,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         <input
           type="email"
           name="contactEmail"
-          defaultValue={profile.contactEmail}
+          defaultValue={values.contactEmail}
           className={FIELD_CLASS}
         />
       </label>
@@ -86,7 +97,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         </span>
         <textarea
           name="devStyle"
-          defaultValue={profile.devStyle}
+          defaultValue={values.devStyle}
           rows={8}
           className={FIELD_CLASS}
         />
@@ -99,7 +110,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         </span>
         <textarea
           name="techStack"
-          defaultValue={profile.techStack}
+          defaultValue={values.techStack}
           rows={6}
           className={FIELD_CLASS}
         />
@@ -109,7 +120,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         技術構成の補足
         <textarea
           name="techStackNote"
-          defaultValue={profile.techStackNote}
+          defaultValue={values.techStackNote}
           rows={2}
           className={FIELD_CLASS}
         />
@@ -119,11 +130,20 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         お問い合わせ文
         <textarea
           name="contactText"
-          defaultValue={profile.contactText}
+          defaultValue={values.contactText}
           rows={2}
           className={FIELD_CLASS}
         />
       </label>
+
+      <FavoriteBar
+        scope="profile"
+        favorites={favorites}
+        onLoad={(data) => {
+          loadFavorite(data);
+          markDirty();
+        }}
+      />
 
       <SaveButton dirty={dirty} pending={pending} saved={saved} />
     </form>

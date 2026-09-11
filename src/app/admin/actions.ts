@@ -4,6 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminUrl } from "@/lib/admin-path";
 import { deleteSessionCookie, verifyAdminSession } from "@/lib/admin-session";
+import {
+  parseScope,
+  pickFavoriteData,
+  saveFavorite,
+  SLOT_COUNT,
+} from "@/lib/favorites";
 import { updateProduct } from "@/lib/products";
 import { updateProfile } from "@/lib/profile";
 
@@ -65,6 +71,39 @@ export async function updateProfileAction(
   revalidatePath("/about");
 
   return { savedAt: Date.now() };
+}
+
+/**
+ * Stores the form's current values in one favorite slot. Invoked from a
+ * button's formAction inside the form, so it receives whatever is typed in
+ * right now -- saving a favorite never publishes anything.
+ */
+export async function saveFavoriteAction(
+  scopeRaw: string,
+  slot: number,
+  formData: FormData,
+) {
+  const session = await verifyAdminSession();
+  if (!session) {
+    redirect(adminUrl("/login"));
+  }
+
+  const scope = parseScope(scopeRaw);
+  if (!scope) {
+    throw new Error("Invalid favorite scope");
+  }
+
+  if (!Number.isInteger(slot) || slot < 0 || slot >= SLOT_COUNT) {
+    throw new Error(`Invalid favorite slot: ${slot}`);
+  }
+
+  await saveFavorite(scope, slot, {
+    label: String(formData.get(`slotLabel${slot}`) ?? "").trim(),
+    savedAt: Date.now(),
+    data: pickFavoriteData(scope, formData),
+  });
+
+  revalidatePath("/admin");
 }
 
 export async function logoutAction() {
