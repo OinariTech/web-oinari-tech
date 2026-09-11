@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import type { SaveState } from "@/app/admin/actions";
+import type { FavoriteData } from "@/lib/favorites";
 
 const IDLE_BUTTON =
   "rounded-md border border-black/20 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-black/5 disabled:opacity-50";
@@ -41,6 +42,25 @@ export function useSaveForm(action: SaveAction) {
     dirty,
     saved: Boolean(state),
     markDirty: () => setDirty(true),
+  };
+}
+
+/**
+ * Holds the values the form's fields start from. The fields are uncontrolled
+ * (so typing stays local), which means loading a favorite has to remount the
+ * form -- hence the key that changes with each load.
+ */
+export function useFormValues<T extends object>(initial: T) {
+  const [values, setValues] = useState(initial);
+  const [formKey, setFormKey] = useState(0);
+
+  return {
+    values,
+    formKey,
+    loadFavorite: (data: FavoriteData) => {
+      setValues((current) => ({ ...current, ...data }) as T);
+      setFormKey((key) => key + 1);
+    },
   };
 }
 

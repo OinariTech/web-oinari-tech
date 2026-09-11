@@ -5,6 +5,7 @@ import { ProductForm } from "@/app/admin/product-form";
 import { ProfileForm } from "@/app/admin/profile-form";
 import { adminUrl } from "@/lib/admin-path";
 import { verifyAdminSession } from "@/lib/admin-session";
+import { getFavorites } from "@/lib/favorites";
 import { getAllProductsForAdmin } from "@/lib/products";
 import { getProfile } from "@/lib/profile";
 
@@ -19,10 +20,15 @@ export default async function AdminPage() {
     redirect(adminUrl("/login"));
   }
 
-  const [products, profile] = await Promise.all([
+  const [products, profile, profileFavorites] = await Promise.all([
     getAllProductsForAdmin(),
     getProfile(),
+    getFavorites({ kind: "profile" }),
   ]);
+
+  const productFavorites = await Promise.all(
+    products.map((product) => getFavorites({ kind: "product", id: product.id })),
+  );
 
   return (
     <div className="px-6 py-16">
@@ -43,14 +49,18 @@ export default async function AdminPage() {
 
       <h2 className="mt-10 text-lg font-semibold">プロダクト</h2>
       <div className="mt-4 space-y-6">
-        {products.map((product) => (
-          <ProductForm key={product.id} product={product} />
+        {products.map((product, index) => (
+          <ProductForm
+            key={product.id}
+            product={product}
+            favorites={productFavorites[index]}
+          />
         ))}
       </div>
 
       <h2 className="mt-12 text-lg font-semibold">プロフィール</h2>
       <div className="mt-4">
-        <ProfileForm profile={profile} />
+        <ProfileForm profile={profile} favorites={profileFavorites} />
       </div>
     </div>
   );

@@ -1,20 +1,31 @@
 "use client";
 
 import { updateProductAction } from "@/app/admin/actions";
+import { FavoriteBar } from "@/app/admin/favorite-bar";
 import {
   FIELD_CLASS,
   LABEL_CLASS,
   SaveButton,
+  useFormValues,
   useSaveForm,
 } from "@/app/admin/save-form";
+import type { Favorites } from "@/lib/favorites";
 import type { Product } from "@/lib/products";
 
-export function ProductForm({ product }: { product: Product }) {
+export function ProductForm({
+  product,
+  favorites,
+}: {
+  product: Product;
+  favorites: Favorites;
+}) {
   const { formAction, pending, dirty, saved, markDirty } =
     useSaveForm(updateProductAction);
+  const { values, formKey, loadFavorite } = useFormValues(product);
 
   return (
     <form
+      key={formKey}
       action={formAction}
       onChange={markDirty}
       className="rounded-lg border border-black/10 p-6 dark:border-white/10"
@@ -27,7 +38,7 @@ export function ProductForm({ product }: { product: Product }) {
           <input
             type="checkbox"
             name="visible"
-            defaultChecked={product.visible}
+            defaultChecked={values.visible}
           />
           サイトに表示する
         </label>
@@ -38,7 +49,7 @@ export function ProductForm({ product }: { product: Product }) {
         <input
           type="text"
           name="title"
-          defaultValue={product.title}
+          defaultValue={values.title}
           className={FIELD_CLASS}
         />
       </label>
@@ -48,7 +59,7 @@ export function ProductForm({ product }: { product: Product }) {
         <input
           type="text"
           name="badge"
-          defaultValue={product.badge}
+          defaultValue={values.badge}
           className={FIELD_CLASS}
         />
       </label>
@@ -57,7 +68,7 @@ export function ProductForm({ product }: { product: Product }) {
         カード説明文(/products一覧)
         <textarea
           name="cardDescription"
-          defaultValue={product.cardDescription}
+          defaultValue={values.cardDescription}
           rows={2}
           className={FIELD_CLASS}
         />
@@ -67,11 +78,20 @@ export function ProductForm({ product }: { product: Product }) {
         紹介文(プロダクトページ冒頭)
         <textarea
           name="pageIntro"
-          defaultValue={product.pageIntro}
+          defaultValue={values.pageIntro}
           rows={4}
           className={FIELD_CLASS}
         />
       </label>
+
+      <FavoriteBar
+        scope={`product:${product.id}`}
+        favorites={favorites}
+        onLoad={(data) => {
+          loadFavorite(data);
+          markDirty();
+        }}
+      />
 
       <SaveButton dirty={dirty} pending={pending} saved={saved} />
     </form>

@@ -72,6 +72,12 @@ the Next.js app, not a separate service.
   provisioned or is temporarily down. Any page reading them needs
   `export const dynamic = "force-dynamic"`, or edits won't show until the
   next deploy.
+- **Favorites**: each admin form has 3 slots (`favorites/profile`,
+  `favorites/product__<id>`). "保存" posts the form's *current* values to
+  `saveFavoriteAction` and stores them without publishing; "呼び出し" only
+  refills the form. The scope and slot travel as **bound action arguments** —
+  React overwrites the `name` of a `formAction` button with its own action
+  id, so a `name`/`value` pair there silently never arrives.
 - **Editable body text** (`intro`, `devStyle`) is plain text: blank lines
   separate paragraphs and `[label](https://…)` becomes a link, rendered by
   `<RichText>` as React elements so stored text can never inject markup.
