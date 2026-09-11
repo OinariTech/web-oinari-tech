@@ -64,11 +64,18 @@ the Next.js app, not a separate service.
   admin access to anyone. The session is a signed (`jose`) HttpOnly cookie;
   `src/proxy.ts` does the optimistic redirect-to-login check for `/admin/*`,
   and every admin Server Action/page re-checks via `verifyAdminSession()`.
-- **Data**: Firestore (`src/lib/firestore.ts`, `@google-cloud/firestore`),
-  collection `products`, one document per product id. `src/lib/products.ts`
-  falls back to hardcoded defaults if Firestore is unreachable or a document
-  doesn't exist yet — the public site must never break because Firestore
-  isn't provisioned or is temporarily down.
+- **Data**: Firestore (`src/lib/firestore.ts`, `@google-cloud/firestore`) —
+  `products/<product id>` for the product cards (`src/lib/products.ts`) and
+  `site/profile` for the `/about` page (`src/lib/profile.ts`). Both fall back
+  to hardcoded defaults if Firestore is unreachable or a document doesn't
+  exist yet — the public site must never break because Firestore isn't
+  provisioned or is temporarily down. Any page reading them needs
+  `export const dynamic = "force-dynamic"`, or edits won't show until the
+  next deploy.
+- **Editable body text** (`intro`, `devStyle`) is plain text: blank lines
+  separate paragraphs and `[label](https://…)` becomes a link, rendered by
+  `<RichText>` as React elements so stored text can never inject markup.
+  The `/about` tech-stack table is one `label: value` per line.
 - **Runtime env vars** (set via Secret Manager in `deploy.yml`, not build
   args — these are server-only secrets and must never reach the client
   bundle): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
