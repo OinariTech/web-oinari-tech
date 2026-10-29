@@ -20,12 +20,20 @@ The brand assets are mirrored to Google Drive. **Whenever a brand asset in this
 repo is added, changed, or removed, apply the same change to the Drive copy in
 the same task** — don't leave the two out of sync, and don't wait to be asked.
 
+The primary mark is `fox-houju-mark` (the fox in profile with the 宝珠), used by
+the header/hero (`src/components/fox-mark.tsx`), the favicon/app icons and the
+OGP image. `fox-mark` (the symmetric front-facing fox) was the primary mark
+until it was retired for reading too close to GitLab's at small sizes — an
+angular low-poly fox face in near-identical red-orange, aimed at the same
+developer audience. It stays in the repo as an alternate; don't promote it back
+without revisiting that.
+
 - Destination: `10_仕事・プロジェクト (Work)` > `11_素材データ` > `OinariTech`
   (folder id `1X6F119wYDh7bc6wl1Q5Nne5J95TuhZwM`)
 - Mirrored files: everything in `public/brand/`, plus `src/app/favicon.ico`,
   `src/app/apple-icon.png`, and `src/app/opengraph-image.png`
-- `src/app/icon.svg` is byte-identical to `public/brand/fox-mark.svg`, so only
-  the latter is uploaded. Re-check this if either file changes.
+- `src/app/icon.svg` is byte-identical to `public/brand/fox-houju-mark.svg`, so
+  only the latter is uploaded. Re-check this if either file changes.
 - Updating an existing file means uploading the new content and trashing the old
   entry — `mcp__Google_Drive__update_file` only changes title/parent, not bytes.
 
